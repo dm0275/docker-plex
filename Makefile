@@ -1,4 +1,5 @@
 DC=docker-compose
+PLEX_CLAIM=`cat plex.claim`
 
 .PHONY: help
 .PHONY: clean check_clean
@@ -6,14 +7,16 @@ DC=docker-compose
 
 ENV=export TZ=America/Chicago \
 	PLEX_PORT=32400 \
-	HOSTNAME=plex \
-    ADVERTISE_IP=http://192.168.86.110:32400/ 
+	PLEX_CLAIM=$(PLEX_CLAIM)
 
 run: setup ## Run Plex
 	$(ENV) && docker-compose up -d
 
+run_i: setup ## Run Plex interactively
+	$(ENV) && docker-compose up
+
 login: ## Login to container
-	$(ENV) docker exec -it --user=plex plex bash
+	$(ENV) && docker exec -it --user=plex plex bash
 
 setup: ## Create DIRs
 	mkdir -p config media transcode

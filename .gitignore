@@ -2,3 +2,6 @@
 media/
 config/
 transcode/
+
+# Plex
+plex.claim
