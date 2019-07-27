@@ -1,3 +1,4 @@
+PLEX_IMAGE="plexinc/pms-docker:latest"
 PLEX_CLAIM=`cat plex.claim`
 IP_ADDRESS="`hostname -I | awk '{print $1}'`"
 
@@ -20,10 +21,11 @@ login: ## Login to container
 	$(ENV) && docker exec -it --user=plex plex bash
 
 setup: ## Create DIRs
+	docker pull $(PLEX_IMAGE)
 	mkdir -p config media transcode
 
 stop: ## Stop Plex Container
-	$(ENV) && docker-compose rm -f
+	$(ENV) && docker-compose stop
 
 remove: ## Remove Plex container
 	$(ENV) && docker-compose rm -f -s
