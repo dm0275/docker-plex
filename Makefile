@@ -1,5 +1,5 @@
-DC=docker-compose
 PLEX_CLAIM=`cat plex.claim`
+IP_ADDRESS="`hostname -I | awk '{print $1}'`"
 
 .PHONY: help
 .PHONY: clean check_clean
@@ -7,7 +7,8 @@ PLEX_CLAIM=`cat plex.claim`
 
 ENV=export TZ=America/Chicago \
 	PLEX_PORT=32400 \
-	PLEX_CLAIM=$(PLEX_CLAIM)
+	PLEX_CLAIM=$(PLEX_CLAIM) \
+	ADVERTISE_IP=http://$(IP_ADDRESS):32400/
 
 run: setup ## Run Plex
 	$(ENV) && docker-compose up -d
