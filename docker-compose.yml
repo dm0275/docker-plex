@@ -7,8 +7,9 @@ services:
     hostname: PlexServer
     volumes:
       - ./config:/config
-      - /mnt/disk0:/mnt/disk0:ro
-      - /mnt/disk1:/mnt/disk1:ro
+      - /mnt/disk0/plex:/mnt/disk0/plex:ro
+      - /mnt/disk1/plex:/mnt/disk1/plex:ro
+      - /mnt/disk2/plex:/mnt/disk2/plex:ro
       - ./transcode:/transcode
     ports:
       - 32400:32400/tcp
@@ -25,8 +26,8 @@ services:
       - ADVERTISE_IP
       - PLEX_CLAIM
     # privileged: true
-    devices:
-      - /dev/dri:/dev/dri
+    #devices:
+    #  - /dev/dri:/dev/dri
 
 volumes:
   config: {}
