@@ -12,10 +12,10 @@ ENV=export TZ=America/Chicago \
 	ADVERTISE_IP=http://$(IP_ADDRESS):32400/
 
 run: setup ## Run Plex
-	$(ENV) && docker-compose up -d
+	$(ENV) && docker compose up -d
 
 run_i: setup ## Run Plex interactively
-	$(ENV) && docker-compose up
+	$(ENV) && docker compose up
 
 login: ## Login to container
 	$(ENV) && docker exec -it --user=plex plex bash
@@ -25,10 +25,10 @@ setup: ## Create DIRs
 	mkdir -p config media transcode
 
 stop: ## Stop Plex Container
-	$(ENV) && docker-compose stop
+	$(ENV) && docker compose stop
 
 remove: ## Remove Plex container
-	$(ENV) && docker-compose rm -f -s
+	$(ENV) && docker compose rm -f -s
 
 check_clean:
 	@echo "Are you sure? [y/N] " && read ans && [ $${ans:-N} = y ]
