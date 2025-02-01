@@ -1,6 +1,6 @@
 PLEX_IMAGE="plexinc/pms-docker:latest"
 PLEX_CLAIM=`cat plex.claim`
-IP_ADDRESS="`hostname -I | awk '{print $1}'`"
+IP_ADDRESS="`ifconfig eno1 | grep 'inet ' | awk '{print $$2}'`"
 
 .PHONY: help
 .PHONY: clean check_clean
