@@ -1,6 +1,6 @@
 PLEX_IMAGE="plexinc/pms-docker:latest"
 PLEX_CLAIM=`cat plex.claim`
-IP_ADDRESS="`ifconfig eno1 | grep 'inet ' | awk '{print $$2}'`"
+IP_ADDRESS="`ifconfig en1 | grep 'inet ' | awk '{print $$2}'`"
 
 .PHONY: help
 .PHONY: clean check_clean
@@ -17,11 +17,14 @@ run: setup ## Run Plex
 run_i: setup ## Run Plex interactively
 	$(ENV) && docker compose up
 
+build:
+	git clone https://github.com/plexinc/pms-docker.git
+	cd pms-docker && docker build --platform linux/arm/v7 -t plexinc/pms-docker:latest .
+
 login: ## Login to container
 	$(ENV) && docker exec -it --user=plex plex bash
 
 setup: ## Create DIRs
-	docker pull $(PLEX_IMAGE)
 	mkdir -p config media transcode
 
 stop: ## Stop Plex Container
